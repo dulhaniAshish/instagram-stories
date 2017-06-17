@@ -13,10 +13,10 @@ class StoryItem extends Component {
 
     getBorderColor() {
         const {
-            isRead
+            story
         } = this.props
-
-        if(isRead) {
+        
+        if(story.isRead) {
             return 'red'
         } else {
             return 'green'

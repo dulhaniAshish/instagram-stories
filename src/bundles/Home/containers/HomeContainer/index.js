@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Home from '../../components/Home'
 import data from './data';
-import { getStories } from '../../../../actions/storiesAction';
+import { getStories, storyRead } from '../../../../actions/storiesAction';
 
 class HomeContainer extends Component {
 
@@ -15,6 +15,7 @@ class HomeContainer extends Component {
 
   openStory(story) {
     console.log('gea;kdjsakds', story)
+    this.props.storyRead(story);
   }
 
   render() {
@@ -31,7 +32,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getStories: stories => dispatch(getStories(stories))
+  getStories: stories => dispatch(getStories(stories)),
+  storyRead: story => dispatch(storyRead(story))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeContainer)
