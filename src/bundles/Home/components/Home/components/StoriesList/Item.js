@@ -4,10 +4,24 @@ import {
     View,
     StyleSheet,
     Text,
-    TouchableOpacity,   
+    TouchableOpacity,
+    Image,   
 } from 'react-native'
 
 class StoryItem extends Component {
+
+
+    getBorderColor() {
+        const {
+            isRead
+        } = this.props
+
+        if(isRead) {
+            return 'red'
+        } else {
+            return 'green'
+        }
+    }
 
 
     render() {
@@ -15,7 +29,7 @@ class StoryItem extends Component {
         const {
             style,
             story,
-            open,
+            openStory,
         } = this.props
 
         const {
@@ -24,12 +38,18 @@ class StoryItem extends Component {
         } = story
 
         return (
-            <TouchableOpacity onPress={() => open(story)}>
+            <TouchableOpacity onPress={() => openStory(story)}>
                 <View style={[
+                    style,
                     styles.container,
-                    style
                 ]}>
+                <Image 
+                    source={{url: 'http://lorempixel.com/output/city-q-c-640-480-6.jpg' }}
+                    style={[styles.userImageContainer, {borderColor: this.getBorderColor()}]}
+                    resizeMode={'contain'} />
+                <View style={styles.nameContainer}>
                     <Text style={styles.nameOfUser}>{user.name}</Text>
+                </View>
                 </View>
             </TouchableOpacity>
         )
@@ -39,10 +59,22 @@ class StoryItem extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        height: 24,
-        width: 24,
-        borderRadius: 12,
-        backgroundColor: 'red',
+        height: 70,
+        width: 70,
+        alignItems: 'center',
+    },
+    userImageContainer: {
+        height: 50, 
+        width: 50, 
+        borderRadius: 25, 
+        borderWidth: 1, 
+        borderColor: 'red',
+    },
+    nameContainer: {
+        marginTop: 5,
+        maxHeight: 15,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     nameOfUser: {
         fontSize: 14,

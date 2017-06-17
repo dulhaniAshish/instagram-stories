@@ -30,19 +30,21 @@ class StoriesList extends Component {
   render() {
 
     const {
-      open,
+      openStory,
       ...props,
     } = this.props
 
 
     return (
-      <View style={{ height: 40, flex: 1}}>
+      <View style={{height: 100, flexDirection: 'row'}}>
         <ListView
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
           dataSource={this.state.dataSource}
           contentContainerStyle={styles.container}
           enableEmptySections={true}
           renderRow={story => (
-            <Item story={story} open={open} style={styles.item} />
+            <Item story={story} openStory={openStory} style={styles.item} />
           )}
           {...props}
         />
@@ -53,8 +55,7 @@ class StoriesList extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 10,
-    alignItems: 'stretch'
+    padding: 5,
   },
   item: {
     marginRight: 3
