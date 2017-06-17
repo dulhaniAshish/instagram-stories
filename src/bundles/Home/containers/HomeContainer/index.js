@@ -3,6 +3,11 @@ import { connect } from 'react-redux'
 import Home from '../../components/Home'
 import data from './data';
 import { getStories, storyRead } from '../../../../actions/storiesAction';
+import ReactNativeProgressBar from '../../../../shared/ProgressBar';
+import {
+  StyleSheet,
+  View,
+} from 'react-native';
 
 class HomeContainer extends Component {
 
@@ -20,12 +25,25 @@ class HomeContainer extends Component {
 
   render() {
     return (
-      <Home stories={this.props.stories} openStory={(story) => this.openStory(story)} />
+      <View style={styles.container}>
+        <Home stories={this.props.stories} openStory={(story) => this.openStory(story)} />
+        <ReactNativeProgressBar 
+          height={2}
+          borderWidth={0}
+          start={true}
+          duration={500}
+        />
+      </View>
     )
   }
-
 }
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#F5FCFF',
+  },
+});
 
 const mapStateToProps = (state) => ({
   stories: state.stories.stories,
