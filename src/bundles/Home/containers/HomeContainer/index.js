@@ -13,9 +13,13 @@ class HomeContainer extends Component {
     this.props.getStories(data.stories);
   }
 
+  openStory(story) {
+    console.log('gea;kdjsakds', story)
+  }
+
   render() {
     return (
-      <Home stories={this.props.stories} />
+      <Home stories={this.props.stories} openStory={(story) => this.openStory(story)} />
     )
   }
 
