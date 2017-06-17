@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import {
   StyleSheet,
   Text,
-  View
+  View,
+  Platform,
 } from 'react-native';
 import StoriesList from './components/StoriesList'; 
 
@@ -10,13 +11,9 @@ export default class Home extends Component {
   
   render() {
 
-    const {
-      stories
-    } = this.props
-
     return (
       <View style={styles.container}>
-          <StoriesList stories={stories} />
+          <StoriesList {...this.props} />
       </View>
     );
   }
@@ -24,6 +21,7 @@ export default class Home extends Component {
 
 const styles = StyleSheet.create({
   container: {
+    marginTop: (Platform.OS === 'ios' ? 64 : 55),
     flex: 1,
     backgroundColor: '#F5FCFF',
   },
