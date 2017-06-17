@@ -1,5 +1,5 @@
 const initialState = {};
 
-export function xyz(state=initialState , action){
-  return initialState;
+export default function xyz(state=[] , action){
+  return state;
 }

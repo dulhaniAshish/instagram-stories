@@ -3,5 +3,5 @@ import xyz from './xyz';
 
 
 export default combineReducers({
-  xyz,
-});
+  xyz
+})
