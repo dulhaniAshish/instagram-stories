@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { AppRegistry, StyleSheet, Text, View, Animated } from "react-native";
 
 class ProgressBar extends Component {
-  
+
   componentWillMount() {
     this.animation = new Animated.Value(this.props.progress);
   }
@@ -15,8 +15,8 @@ class ProgressBar extends Component {
       }).start();
     }
   }
-  
-  
+
+
   render() {
     const {
       height,
@@ -47,7 +47,8 @@ class ProgressBar extends Component {
               top: 0,
               bottom: 0,
               width: widthInterpolated,
-              backgroundColor: barColor
+              backgroundColor: barColor,
+              borderRadius: 5,
             }}
           />
         </View>
@@ -89,7 +90,7 @@ class ReactNativeProgressBar extends Component {
           <ProgressBar
             row
             progress={this.state.progress}
-            duration={500}
+            duration={this.props.duration}
             height={this.props.height}
             borderWidth={this.props.borderWidth}
             barColor={this.props.barColor}
@@ -104,11 +105,11 @@ class ReactNativeProgressBar extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 250,
   },
   progressContainer: {
-    alignItems: "center", 
-    flexDirection: "row"
+    alignItems: "center",
+    flexDirection: "row",
+    paddingHorizontal : 4,
   }
 });
 

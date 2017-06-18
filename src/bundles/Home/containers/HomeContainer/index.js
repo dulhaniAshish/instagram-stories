@@ -19,7 +19,6 @@ class HomeContainer extends Component {
   }
 
   openStory(story) {
-    console.log('gea;kdjsakds', story)
     this.props.storyRead(story);
   }
 
@@ -27,12 +26,6 @@ class HomeContainer extends Component {
     return (
       <View style={styles.container}>
         <Home stories={this.props.stories} openStory={(story) => this.openStory(story)} />
-        <ReactNativeProgressBar 
-          height={2}
-          borderWidth={0}
-          start={true}
-          duration={500}
-        />
       </View>
     )
   }

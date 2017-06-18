@@ -9,31 +9,42 @@ import {
     Dimensions,
 } from 'react-native'
 
-var Lightbox = require('react-native-lightbox');
-
 import Carousel from 'react-native-looped-carousel';
+import ReactNativeProgressBar from '../../../../../../../src/shared/ProgressBar';
 
+var Lightbox = require('react-native-lightbox');
 var WINDOW_WIDTH = Dimensions.get('window').width;
 var WINDOW_HEIGHT = Dimensions.get('window').height;
 
 var _this;
+const imageUris= [
+  'http://cdn.lolwot.com/wp-content/uploads/2015/07/20-pictures-of-animals-in-hats-to-brighten-up-your-day-1.jpg',
+  'http://cdn.lolwot.com/wp-content/uploads/2015/07/20-pictures-of-animals-in-hats-to-brighten-up-your-day-1.jpg',
+  'http://cdn.lolwot.com/wp-content/uploads/2015/07/20-pictures-of-animals-in-hats-to-brighten-up-your-day-1.jpg',
+];
+
+const FullScreenLightBox = ({uri, key}) => (
+    <View key={key} style={{flex : 1}}>
+        <Image
+          style={{ flex: 1 }}
+          resizeMode="contain"
+          source={{ uri: uri }}
+        />
+    </View>
+)
 
 class StoryItem extends Component {
 
-
-  constructor(props) {
-    super(props)
-
-    _this = this
-
-  }
-
+    constructor(props) {
+      super(props)
+      _this = this
+    }
 
     getBorderColor () {
         const {
             story
         } = this.props
-        
+
         if(story.isRead) {
             return 'red'
         } else {
@@ -41,34 +52,16 @@ class StoryItem extends Component {
         }
     }
 
-    renderFullScreenLightBox(uri,key){
-      return(
-        <View key={key} style={{flex : 1}}>
-            <Image
-              style={{ flex: 1 }}
-              resizeMode="contain"
-              source={{ uri: uri }}
-            />
-        </View>
-      )
-
-    }
-
     renderCarousel() {
-      const imageUris= [
-        'http://cdn.lolwot.com/wp-content/uploads/2015/07/20-pictures-of-animals-in-hats-to-brighten-up-your-day-1.jpg',
-        'http://cdn.lolwot.com/wp-content/uploads/2015/07/20-pictures-of-animals-in-hats-to-brighten-up-your-day-1.jpg',
-        'http://cdn.lolwot.com/wp-content/uploads/2015/07/20-pictures-of-animals-in-hats-to-brighten-up-your-day-1.jpg',
-      ];
       const lightboxViews = [];
       for (i= 0 ; i<imageUris.length ;i++ ){
         lightboxViews.push(
-            _this.renderFullScreenLightBox(imageUris[i],i)
+            <FullScreenLightBox uri={imageUris[i]} key={i}/>
         )
       }
 
       return (
-        <Carousel style={{ width: WINDOW_WIDTH, height: WINDOW_WIDTH }}>
+        <Carousel delay={5000} style={{ width: WINDOW_WIDTH, height: WINDOW_WIDTH }}>
           {lightboxViews}
         </Carousel>
       );
@@ -76,7 +69,6 @@ class StoryItem extends Component {
 
 
     render () {
-
         const {
             style,
             story,
@@ -90,9 +82,17 @@ class StoryItem extends Component {
 
         return (
           <Lightbox renderHeader={close => (
-            <View>
-            </View>
-          )} swipeToDismiss={false} renderContent={this.renderCarousel}>
+              <View style={{paddingTop: 25}}>
+                <TouchableOpacity onPress={close}>
+                  <ReactNativeProgressBar
+                    height={2}
+                    borderWidth={0}
+                    start={true}
+                    duration={500}
+                  />
+                </TouchableOpacity>
+              </View>
+            )} swipeToDismiss={false} renderContent={this.renderCarousel}>
                 <View style={[
                     style,
                     styles.container,
@@ -132,6 +132,16 @@ const styles = StyleSheet.create({
     },
     nameOfUser: {
         fontSize: 14,
+    },
+    closeButton: {
+        color: 'white',
+        borderWidth: 1,
+        borderColor: 'white',
+        padding: 8,
+        borderRadius: 3,
+        textAlign: 'center',
+        margin: 10,
+        alignSelf: 'flex-end',
     },
 })
 
