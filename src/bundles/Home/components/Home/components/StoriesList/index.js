@@ -27,7 +27,7 @@ class StoriesList extends Component {
   }
 
 
-  render() {
+  render () {
 
     const {
       openStory,

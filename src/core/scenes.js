@@ -4,6 +4,6 @@ import HomeScene from '../bundles/Home'
 
 export default Actions.create(
   <Scene key="root">
-    <Scene key="HomeScene" component={HomeScene} title="Stories"/>
+    <Scene key="HomeScene" component={HomeScene} title="Preview"/>
   </Scene>
 )

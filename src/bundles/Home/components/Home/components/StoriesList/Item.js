@@ -5,13 +5,31 @@ import {
     StyleSheet,
     Text,
     TouchableOpacity,
-    Image,   
+    Image,
+    Dimensions,
 } from 'react-native'
+
+var Lightbox = require('react-native-lightbox');
+
+import Carousel from 'react-native-looped-carousel';
+
+var WINDOW_WIDTH = Dimensions.get('window').width;
+var WINDOW_HEIGHT = Dimensions.get('window').height;
+
+var _this;
 
 class StoryItem extends Component {
 
 
-    getBorderColor() {
+  constructor(props) {
+    super(props)
+
+    _this = this
+
+  }
+
+
+    getBorderColor () {
         const {
             story
         } = this.props
@@ -23,8 +41,41 @@ class StoryItem extends Component {
         }
     }
 
+    renderFullScreenLightBox(uri,key){
+      return(
+        <View key={key} style={{flex : 1}}>
+            <Image
+              style={{ flex: 1 }}
+              resizeMode="contain"
+              source={{ uri: uri }}
+            />
+        </View>
+      )
 
-    render() {
+    }
+
+    renderCarousel() {
+      const imageUris= [
+        'http://cdn.lolwot.com/wp-content/uploads/2015/07/20-pictures-of-animals-in-hats-to-brighten-up-your-day-1.jpg',
+        'http://cdn.lolwot.com/wp-content/uploads/2015/07/20-pictures-of-animals-in-hats-to-brighten-up-your-day-1.jpg',
+        'http://cdn.lolwot.com/wp-content/uploads/2015/07/20-pictures-of-animals-in-hats-to-brighten-up-your-day-1.jpg',
+      ];
+      const lightboxViews = [];
+      for (i= 0 ; i<imageUris.length ;i++ ){
+        lightboxViews.push(
+            _this.renderFullScreenLightBox(imageUris[i],i)
+        )
+      }
+
+      return (
+        <Carousel style={{ width: WINDOW_WIDTH, height: WINDOW_WIDTH }}>
+          {lightboxViews}
+        </Carousel>
+      );
+    }
+
+
+    render () {
 
         const {
             style,
@@ -38,12 +89,15 @@ class StoryItem extends Component {
         } = story
 
         return (
-            <TouchableOpacity onPress={() => openStory(story)}>
+          <Lightbox renderHeader={close => (
+            <View>
+            </View>
+          )} swipeToDismiss={false} renderContent={this.renderCarousel}>
                 <View style={[
                     style,
                     styles.container,
                 ]}>
-                <Image 
+                <Image
                     source={{url: 'http://lorempixel.com/output/city-q-c-640-480-6.jpg' }}
                     style={[styles.userImageContainer, {borderColor: this.getBorderColor()}]}
                     resizeMode={'contain'} />
@@ -51,7 +105,7 @@ class StoryItem extends Component {
                     <Text style={styles.nameOfUser}>{user.name}</Text>
                 </View>
                 </View>
-            </TouchableOpacity>
+          </Lightbox>
         )
     };
 }
@@ -64,10 +118,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     userImageContainer: {
-        height: 50, 
-        width: 50, 
-        borderRadius: 25, 
-        borderWidth: 1, 
+        height: 50,
+        width: 50,
+        borderRadius: 25,
+        borderWidth: 1,
         borderColor: 'red',
     },
     nameContainer: {
